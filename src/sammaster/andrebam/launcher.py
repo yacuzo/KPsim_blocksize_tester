@@ -19,21 +19,31 @@ if __name__ == '__main__':
     from optparse import OptionParser
     usage = "usage: %prog [var=value]"
     p = OptionParser(usage)
-    p.add_option("--kpPath", type="string", help="path to kp executable with '' - '/SW-GPU/bin/kp'")
+    p.add_option("--dirPath", type="string", help="path to program dir - '/home/user/SW-GPU/'")
+    p.add_option("--exePath", type="string", help="subpath of dirPath to executable - 'bin/kp'")
     (opts, args) = p.parse_args()
 
-    if opts.kpPath == None:
-        print "Missing --kpPath argument"
+    if opts.dirPath == None:
+        print "Missing --dirPath argument"
+        exit()
+    if opts.exePath == None:
+        print "Missing --exePath argument"
         exit()
     
-    print "checking path: "+opts.kpPath
-
-    if os.path.isfile(opts.kpPath):
-        print "file found"
+    print "checking paths"
+    
+    if os.path.isdir(opts.dirPath):
+        print "dir found"
     else:
-        print "Path "+opts.kpPath+" not found!"
+        print "Path "+opts.dirPath+" not found or not a dir!"
+        exit()
+        
+    if os.path.isfile(opts.dirPath + opts.exePath):
+        print "executable found"
+    else:
+        print "Executable "+opts.dirPath + opts.exePath+" not found!"
         exit()
     
-    gen = DataGenerator.DataGenerator(opts.kpPath)
-    gen.callLoop()
+    gen = DataGenerator.DataGenerator(opts.dirPath, opts.exePath)
+    gen.generate()
     
