@@ -62,7 +62,7 @@ class DataGenerator(object):
             lines = output.split("\n")
             time_taken = lines[-4][14:22]
         else:
-            time_taken = self.timeout
+            time_taken = float('nan')
         
         datawriter.writerow([x, y, status, time_taken])
         csvfile.close()
