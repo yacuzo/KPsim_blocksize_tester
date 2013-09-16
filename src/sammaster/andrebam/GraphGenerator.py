@@ -59,11 +59,12 @@ class GraphGenerator(object):
         min_x = min(self.x)
         max_y = max(self.y)
         min_y = min(self.y)
-        d2_times = np.reshape(np.array(self.times), (max_x - min_x +1, -1))
+        d2_times = np.transpose(np.reshape(np.array(self.times), (max_x - min_x +1, -1)))
         print d2_times
-        im = plt.imshow(d2_times, interpolation='nearest', cmap=cm.hot, origin="lower")
-        #im.set_extent([min_x - 0.5,max_x + 0.5,min_y-0.5,max_y+0.5])
-        plt.xticks(np.linspace(min_x, max_x, max_x - min_x + 1))
+        im = plt.imshow(d2_times, interpolation='nearest', cmap=cm.hot, origin="lower", aspect='auto')
+        plt.xlabel('x')
+        plt.ylabel('y')
+        im.set_extent([min_x - 0.5,max_x + 0.5,min_y-0.5,max_y+0.5])
         plt.colorbar(im,orientation='vertical', shrink=0.8)
         plt.show()
         
